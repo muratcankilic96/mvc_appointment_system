@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Invalid";
+}
+
+@if (TempData["Invalid"] != null)
+{
+    <div>
+        <p><strong>Başarısız Bağlantı!</strong> @TempData["Invalid"].ToString()</p>
+    </div>
+
+    <div>
+        <a href="/" id="backLink">Geri Dön</a>
+    </div>
+}
+else
+{
+    <div>
+        Aradığınız sayfa bulunamadı.
+    </div>
+}

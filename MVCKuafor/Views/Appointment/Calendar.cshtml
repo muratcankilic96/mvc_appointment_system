@@ -1,0 +1,217 @@
+﻿@model MVCKuafor.Models.Rendezvous
+
+@{
+    ViewBag.Title = "Calendar";
+}
+
+<h2>Randevu Takvimi</h2>
+
+
+<style>
+    .table-design {
+        border: double;
+    }
+
+    .available {
+        color: black;
+        background-color: green;
+    }
+
+    .unavailable {
+        color: black;
+        background-color: gray;
+    }
+
+    .unavailable:hover {
+        color: black;
+        background-color: lightgray;
+    }
+
+    .appointed {
+        color: black;
+        background-color: yellow;
+    }
+
+    .available:hover {
+        color: black;
+        background-color: limegreen;
+    }
+
+    .selected {
+        color: black;
+        background-color: mediumpurple;
+    }
+
+    .text-danger {
+        color: red;
+    }
+</style>
+
+@if (Session["isEmployee"] != null)
+{
+        using (Ajax.BeginForm("Calendar", "Appointment",
+  new AjaxOptions { LoadingElementId = "loader", OnSuccess = "onSuccess" }))
+        {
+            <div>
+                @Html.ValidationMessageFor(model => model.TimeSlot, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.EmployeeId, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+                <table name="timetable" class="table-design">
+                    @Html.HiddenFor(m => m.TimeSlot)
+                    @Html.HiddenFor(m => m.EmployeeId)
+                    @Html.HiddenFor(m => m.CustomerId)
+                    @Html.HiddenFor(m => m.IsUnavailable)
+                    <tr>
+                        <th name="date">@ViewData["Day1"]</th>
+                        @Html.Raw(@ViewData["day1slot1"])
+                        @Html.Raw(@ViewData["day1slot2"])
+                        @Html.Raw(@ViewData["day1slot3"])
+                        @Html.Raw(@ViewData["day1slot4"])
+                        @Html.Raw(@ViewData["day1slot5"])
+                        @Html.Raw(@ViewData["day1slot6"])
+                        @Html.Raw(@ViewData["day1slot7"])
+                        @Html.Raw(@ViewData["day1slot8"])
+                        @Html.Raw(@ViewData["day1slot9"])
+                        @Html.Raw(@ViewData["day1slot10"])
+                    </tr>
+
+                    <tr>
+                        <th name="date">@ViewData["Day2"]</th>
+                        @Html.Raw(@ViewData["day2slot1"])
+                        @Html.Raw(@ViewData["day2slot2"])
+                        @Html.Raw(@ViewData["day2slot3"])
+                        @Html.Raw(@ViewData["day2slot4"])
+                        @Html.Raw(@ViewData["day2slot5"])
+                        @Html.Raw(@ViewData["day2slot6"])
+                        @Html.Raw(@ViewData["day2slot7"])
+                        @Html.Raw(@ViewData["day2slot8"])
+                        @Html.Raw(@ViewData["day2slot9"])
+                        @Html.Raw(@ViewData["day2slot10"])
+                    </tr>
+
+                    <tr>
+                        <th name="date">@ViewData["Day3"]</th>
+                        @Html.Raw(@ViewData["day3slot1"])
+                        @Html.Raw(@ViewData["day3slot2"])
+                        @Html.Raw(@ViewData["day3slot3"])
+                        @Html.Raw(@ViewData["day3slot4"])
+                        @Html.Raw(@ViewData["day3slot5"])
+                        @Html.Raw(@ViewData["day3slot6"])
+                        @Html.Raw(@ViewData["day3slot7"])
+                        @Html.Raw(@ViewData["day3slot8"])
+                        @Html.Raw(@ViewData["day3slot9"])
+                        @Html.Raw(@ViewData["day3slot10"])
+                    </tr>
+
+                    <tr>
+                        <th name="date">@ViewData["Day4"]</th>
+                        @Html.Raw(@ViewData["day4slot1"])
+                        @Html.Raw(@ViewData["day4slot2"])
+                        @Html.Raw(@ViewData["day4slot3"])
+                        @Html.Raw(@ViewData["day4slot4"])
+                        @Html.Raw(@ViewData["day4slot5"])
+                        @Html.Raw(@ViewData["day4slot6"])
+                        @Html.Raw(@ViewData["day4slot7"])
+                        @Html.Raw(@ViewData["day4slot8"])
+                        @Html.Raw(@ViewData["day4slot9"])
+                        @Html.Raw(@ViewData["day4slot10"])
+                    </tr>
+
+                    <tr>
+                        <th name="date">@ViewData["Day5"]</th>
+                        @Html.Raw(@ViewData["day5slot1"])
+                        @Html.Raw(@ViewData["day5slot2"])
+                        @Html.Raw(@ViewData["day5slot3"])
+                        @Html.Raw(@ViewData["day5slot4"])
+                        @Html.Raw(@ViewData["day5slot5"])
+                        @Html.Raw(@ViewData["day5slot6"])
+                        @Html.Raw(@ViewData["day5slot7"])
+                        @Html.Raw(@ViewData["day5slot8"])
+                        @Html.Raw(@ViewData["day5slot9"])
+                        @Html.Raw(@ViewData["day5slot10"])
+                    </tr>
+
+                    <tr>
+                        <th name="date">@ViewData["Day6"]</th>
+                        @Html.Raw(@ViewData["day6slot1"])
+                        @Html.Raw(@ViewData["day6slot2"])
+                        @Html.Raw(@ViewData["day6slot3"])
+                        @Html.Raw(@ViewData["day6slot4"])
+                        @Html.Raw(@ViewData["day6slot5"])
+                        @Html.Raw(@ViewData["day6slot6"])
+                        @Html.Raw(@ViewData["day6slot7"])
+                        @Html.Raw(@ViewData["day6slot8"])
+                        @Html.Raw(@ViewData["day6slot9"])
+                        @Html.Raw(@ViewData["day6slot10"])
+                    </tr>
+
+                    <tr>
+                        <th name="date">@ViewData["Day7"]</th>
+                        @Html.Raw(@ViewData["day7slot1"])
+                        @Html.Raw(@ViewData["day7slot2"])
+                        @Html.Raw(@ViewData["day7slot3"])
+                        @Html.Raw(@ViewData["day7slot4"])
+                        @Html.Raw(@ViewData["day7slot5"])
+                        @Html.Raw(@ViewData["day7slot6"])
+                        @Html.Raw(@ViewData["day7slot7"])
+                        @Html.Raw(@ViewData["day7slot8"])
+                        @Html.Raw(@ViewData["day7slot9"])
+                        @Html.Raw(@ViewData["day7slot10"])
+                    </tr>
+                </table>
+            </div>
+            <div> <button type="submit" name="post-date" style="padding: 6px 6px 6px 6px">Tarihi Geçersizleştir/Geçerlileştir</button> </div>
+        }
+
+        <script>
+            var date;
+            var time;
+
+            $("button[name='post-employee']").hide();
+            $("button[name='post-date']").hide();
+
+            $("th[name='datefield']").on('click', function () {
+                $("th.selected").toggleClass('selected');
+                date = $(this).parent().children('th[name="date"]').text();
+                time = $(this).text();
+                time = time.replace(":", "-");
+                var datetime = date + "-" + time;
+                console.log(datetime);
+                var dates = datetime.split('-');
+                console.log(parseInt(parseInt(dates[0])), parseInt(dates[1]), parseInt(dates[2]), parseInt(dates[3]), parseInt(dates[4]));
+                var lastdate = new Date(dates[2], parseInt(dates[1]) - 1, dates[0], dates[3], dates[4], 0, 0).toJSON();
+                console.log(lastdate);
+                document.getElementById('TimeSlot').value = lastdate;
+                document.getElementById('CustomerId').value = '0';
+                document.getElementById('EmployeeId').value = '@Session["ID"]';
+                document.getElementById('IsUnavailable').value = '1';
+                $(this).toggleClass('selected');
+                $("button[name='post-date']").show();
+            });
+
+            $("th[class='unavailable']").on('click', function () {
+                $("th.selected").toggleClass('selected');
+                date = $(this).parent().children('th[name="date"]').text();
+                time = $(this).text();
+                time = time.replace(":", "-");
+                var datetime = date + "-" + time;
+                console.log(datetime);
+                var dates = datetime.split('-');
+                console.log(parseInt(parseInt(dates[0])), parseInt(dates[1]), parseInt(dates[2]), parseInt(dates[3]), parseInt(dates[4]));
+                var lastdate = new Date(dates[2], parseInt(dates[1]) - 1, dates[0], dates[3], dates[4], 0, 0).toJSON();
+                console.log(lastdate);
+                document.getElementById('TimeSlot').value = lastdate;
+                document.getElementById('CustomerId').value = '0';
+                document.getElementById('EmployeeId').value = '@Session["ID"]';
+                document.getElementById('IsUnavailable').value = '2';
+                $(this).toggleClass('selected');
+                $("button[name='post-date']").show();
+            });
+
+
+        </script>
+}
+else
+{
+    <p>403 Forbidden!</p>
+}

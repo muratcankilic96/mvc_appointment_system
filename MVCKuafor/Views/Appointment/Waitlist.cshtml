@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "Info";
+}
+<style>
+    .selected-rendezvous {
+        border: solid;
+        background-color: chocolate;
+    }
+
+    .list-rendezvous {
+        border: groove;
+        background-color: coral;
+        list-style: none;
+    }
+</style>
+
+<h2>Bekleme Listesi</h2>
+
+@if (Session["isEmployee"] != null)
+{
+    using (Ajax.BeginForm("Waitlist", "Appointment",
+new AjaxOptions { LoadingElementId = "loader", OnSuccess = "onSuccess" }))
+    {
+        @Html.Hidden("rendezvousField", "");
+        <ul class="list-rendezvous">
+            @Html.Raw(@ViewData["rendezvous-list"])
+        </ul>
+        <button type="submit" name="post-deletion" value="delete-it">Randevuyu İptal Et</button>
+    }
+    <script>
+        $("button[name='post-deletion']").hide();
+
+        $("li[name='rendezvous-element']").on('click', function () {
+            $("li.selected-rendezvous").toggleClass('selected-rendezvous');
+            $(this).toggleClass('selected-rendezvous');
+            $("button[name='post-deletion']").show();
+            var val = $(this).attr('id');
+            var splitted = val.split('-');
+            console.log(splitted[1]);
+            document.getElementById('rendezvousField').value = splitted[1];
+        });
+    </script>
+}
+else
+{
+    <p>403 Forbidden!</p>
+}

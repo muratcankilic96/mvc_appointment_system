@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Success";
+}
+
+@if (TempData["Success"] != null)
+{
+    <div>
+        <p><strong>Tamamdır!</strong> @TempData["Success"].ToString()</p>
+    </div>
+
+    <div>
+        <a href="/" id="backLink">Geri Dön</a>
+    </div>
+}
+else
+{
+    <div>
+        Aradığınız sayfa bulunamadı.
+    </div>
+}

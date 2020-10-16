@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewBag.Title = "Info";
+}
+<style>
+    .selected-employee {
+        border: solid;
+        background-color: chocolate;
+    }
+
+    .list-employee {
+        border: groove;
+        background-color: coral;
+        list-style: none;
+    }
+</style>
+
+<h2>Müşteriler</h2>
+
+@if (Session["isAdmin"] != null)
+{
+    if (!Session["isAdmin"].ToString().Equals("1"))
+    {
+        <p>403 Forbidden!</p>
+    }
+    else
+    {
+        using (Ajax.BeginForm("Employee", "Administration",
+    new AjaxOptions { LoadingElementId = "loader", OnSuccess = "onSuccess" }))
+        {
+            @Html.Hidden("employeeField", "");
+            @Html.Hidden("action", "");
+            <ul class="list-employee">
+                @Html.Raw(@ViewData["employee-list"])
+            </ul>
+            <button type="submit" name="post-edit" value="edit-it">Çalışanı Düzenle</button><br />
+            <button type="submit" name="post-deletion" value="delete-it">Çalışanı Sil</button>
+        }
+        <script>
+            $("button[name='post-deletion']").hide();
+            $("button[name='post-edit']").hide();
+
+            $("button[name='post-edit']").on('click', function () {
+                document.getElementById('action').value = "edit";
+            });
+
+            $("button[name='post-deletion']").on('click', function () {
+                document.getElementById('action').value = "delete";
+            });
+
+            $("li[name='employee-element']").on('click', function () {
+                $("li.selected-employee").toggleClass('selected-employee');
+                $(this).toggleClass('selected-employee');
+                $("button[name='post-deletion']").show();
+                $("button[name='post-edit']").show();
+                var val = $(this).attr('id');
+                var splitted = val.split('-');
+                console.log(splitted[1]);
+                document.getElementById('employeeField').value = splitted[1];
+            });
+        </script>
+    }
+}
+else
+{
+    <p>403 Forbidden!</p>
+}

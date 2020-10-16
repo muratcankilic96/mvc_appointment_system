@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<style>
+    html {
+        background-color: cornsilk;
+    }
+    .sidenav {
+        height: 100%; 
+        width: 160px;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: darkseagreen; 
+        overflow-x: hidden; 
+        padding-top: 20px;
+    }
+
+    .sidenav p {
+        padding: 6px 8px 6px 16px;
+        text-decoration: none;
+        font-size: 20px;
+        color: black;
+        display: block;
+    }
+
+    .sidenav a {
+        padding: 6px 8px 6px 16px;
+        text-decoration: none;
+        font-size: 20px;
+        color: aquamarine;
+        display: block;
+    }
+
+    .container {
+        margin-left: 160px;
+        padding: 0px 10px;
+    }
+
+</style>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuaför Randevu Sistemi</title>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body>
+    @if (Session["username"] != null && !Url.Action().Equals("Valid"))
+    {
+        if (Session["isAdmin"].ToString().Equals("0") && Session["isEmployee"] == null)
+        {
+            <div class="sidenav">
+                <p>@Session["Username"]</p>
+                <hr />
+                <p>Yeni Randevu</p>
+                <a href="/Appointment/ByDate">Tarihe Göre</a>
+                <hr />
+                <a href="/Appointment/Info">Randevu Bilgilerim</a>
+                <hr />
+                <a href="/login/logout">Çıkış Yap</a>
+            </div>
+        }
+        else if (Session["isAdmin"].ToString().Equals("1") && Session["isEmployee"] == null)
+        {
+            <div class="sidenav">
+                <p>@Session["Username"]</p>
+                <hr />
+                <p>Çalışanlar</p>
+                <a href="/Administration/Employee">Çalışanları Yönet</a>
+                <hr />
+                <p>Müşteriler</p>
+                <a href="#">Müşterileri Yönet</a>
+                <hr />
+                <p>Randevular</p>
+                <a href="#">Randevuları Yönet</a>
+                <hr />
+                <a href="/login/logout">Çıkış Yap</a>
+            </div>
+        }
+        else
+        {
+            <div class="sidenav">
+                <p>@Session["Username"]</p>
+                <hr />
+                <p>Randevu İşlemleri</p>
+                <a href="/Appointment/Calendar">Randevu Takvimi</a>
+                <a href="/Appointment/Waitlist">Bekleme Listesi</a>
+                <hr />
+                <a href="/login/logout">Çıkış Yap</a>
+            </div>
+        }
+
+        <div class="container">
+            @RenderBody()
+            <hr />
+        </div>
+
+    }
+    else
+    {
+        <div>
+            @RenderBody()
+            <hr />
+        </div>
+    }
+
+    @if (Session["username"] != null)
+    {
+        <footer class="container">
+            Kuaför Randevu Sistemi - 2018 by Muratcan Kılıç
+        </footer>
+    }
+    else
+    {
+        <footer>
+            Kuaför Randevu Sistemi - 2018 by Muratcan Kılıç
+        </footer>
+    }
+
+
+
+</body>
+</html>
